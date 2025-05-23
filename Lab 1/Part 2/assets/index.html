@@ -1,47 +1,167 @@
+<!--
+	Name: Kulraj Singh
+	File: 1Index.html
+	Date: 05/22/2025
+	Description:
+	-->
+
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Birdwatching</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300%7CCinzel+Decorative:700" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-      <h1>Birdwatching</h1>
-      <img src="dove.png" alt="a simple dove logo">
-
-
-      <ul>
-        <li><span>Home</span></li>
-        <li><a href="#">Get started</a></li>
-        <li><a href="#">Photos</a></li>
-        <li><a href="#">Gear</a></li>
-        <li><a href="#">Forum</a></li>
-      </ul>
-
-
+<head>
+  <meta charset="utf-8">
+  <title>Birdwatching</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300|Cinzel+Decorative:700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+ 
+    body {
+      background: #666;
+    }
+    header {
+      background: #92e285;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem 1rem 2rem;
+      margin-bottom: 0;
+      border-bottom: 6px solid #777;
+    }
+    .logo {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+      color: #222;
+      text-shadow: 2px 2px 6px #222, 0px 0px 18px #333;
+    }
+    .header-icon {
+      width: 60px;
+      height: 60px;
+    }
+    nav {
+      background: #89ff59;
+      border-bottom: 6px solid #888;
+    }
+    nav ul {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    nav li {
+      flex: 1;
+      text-align: center;
+    }
+    nav a, nav span {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 2.3rem;
+      text-decoration: none;
+      color: #222;
+      padding: 1.1rem 0;
+      display: block;
+    }
+    main {
+      display: flex;
+      background: #7bee4e;
+      margin: 0;
+      border-top: 8px solid #999;
+      border-bottom: 8px solid #999;
+      min-height: 350px;
+    }
+    .welcome, .favorites {
+      flex: 1;
+      padding: 2.5rem 2.5rem;
+      box-sizing: border-box;
+      min-width: 320px;
+    }
+    .welcome h2,
+    .favorites h2 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 3px #222;
+    }
+    .favorites h2 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+    }
+    .photo-grid a img {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      box-shadow: 1px 1px 6px #555;
+    }
+    footer {
+      background: #a9a9a9;
+      color: #222;
+      padding: 1.3rem 2.5rem;
+      font-size: 1.5rem;
+      border-top: 6px solid #999;
+    }
+    footer a {
+      color: #1886e2;
+    }
+    @media (max-width: 850px) {
+      main {
+        flex-direction: column;
+      }
+      .welcome, .favorites {
+        min-width: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Birdwatching</span>
+    <img src="dove.png" alt="a simple dove logo" class="header-icon">
+  </header>
+  <nav>
+    <ul>
+      <li><span>HOME</span></li>
+      <li><a href="#">GET STARTED</a></li>
+      <li><a href="#">PHOTOS</a></li>
+      <li><a href="#">GEAR</a></li>
+      <li><a href="#">FORUM</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section class="welcome">
       <h2>Welcome</h2>
-
-      <p>Welcome to our fake birdwatching site. If this were a real site, it would be the ideal place to come to learn more about birdwatching, whether you are a beginner looking to learn how to get into birding, or an expert wanting to share ideas, tips, and photos with other like-minded people.</p>
-
-      <p>So don't waste time! Get what you need, then turn off that computer and get out into the great outdoors!</p>
-
-      <h2>Favourite photos</h2>
-
-      <a href="favorite-1.jpg"><img src="favorite-1_th.jpg" alt="Small black bird, black claws, long black slender beak, links to larger version of the image"></a>
-      <a href="favorite-2.jpg"><img src="favorite-2_th.jpg" alt="Top half of a pretty bird with bright blue plumage on neck, light colored beak, blue headdress, links to larger version of the image"></a>
-      <a href="favorite-3.jpg"><img src="favorite-3_th.jpg" alt="Top half of a large bird with white plumage, very long curved narrow light colored break, links to larger version of the image"></a>
-      <a href="favorite-4.jpg"><img src="favorite-4_th.jpg" alt="Large bird, mostly white plumage with black plumage on back and rear, long straight white beak, links to larger version of the image"></a>
-
-
-      <p>This fake website example is CC0 — any part of this code may be reused in any way you wish. Original example written by Chris Mills, 2016.</p>
-
-      <p><a href="http://game-icons.net/lorc/originals/dove.html">Dove icon</a> by Lorc.</p>
-
-  </body>
+      <p>
+        Welcome to our fake birdwatching site. If this were a real site, it would be the ideal place to come to learn more about birdwatching, whether you are a beginner looking to learn how to get into birding, or an expert wanting to share ideas, tips, and photos with other like-minded people.
+      </p>
+      <p>
+        So don't waste time! Get what you need, then turn off that computer and get out into the great outdoors!
+      </p>
+    </section>
+    <section class="favorites">
+      <h2>Favourite Photos</h2>
+      <div class="photo-grid">
+        <a href="favorite-1.jpg"><img src="favorite-1_th.jpg" alt="Small black bird, black claws, long black slender beak"></a>
+        <a href="favorite-2.jpg"><img src="favorite-2_th.jpg" alt="Pretty bird, bright blue plumage, blue headdress"></a>
+        <a href="favorite-3.jpg"><img src="favorite-3_th.jpg" alt="Large bird, white plumage, long curved beak"></a>
+        <a href="favorite-4.jpg"><img src="favorite-4_th.jpg" alt="Large bird, white and black plumage, long straight beak"></a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>
+      This fake website example is CC0 — any part of this code may be reused in any way you wish. Original example written by Chris Mills, 2016.
+    </p>
+    <p>
+      <a href="http://game-icons.net/lorc/originals/dove.html">Dove icon</a> by Lorc.
+    </p>
+  </footer>
+</body>
 </html>
+
