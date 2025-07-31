@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Silly Story Generator</title>
+    <style>
+      body {
+        font-family: helvetica, sans-serif;
+        width: 350px;
+        margin: 40px auto;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      div {
+        padding-bottom: 20px;
+      }
+
+      input[type="text"] {
+        padding: 5px;
+        width: 150px;
+      }
+
+      button {
+        padding: 8px 12px;
+        font-size: 1rem;
+      }
+
+      .story {
+        background: #ffc125;
+        color: #5e2612;
+        padding: 10px;
+        visibility: hidden;
+        margin-top: 20px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <label for="customname">Enter custom name:</label>
+      <input id="customname" type="text" placeholder="e.g. Alice" />
+    </div>
+
+    <div>
+      <label for="us">US</label>
+      <input id="us" type="radio" name="ukus" value="us" checked />
+      <label for="uk">UK</label>
+      <input id="uk" type="radio" name="ukus" value="uk" />
+    </div>
+
+    <div>
+      <button class="randomize">Generate random story</button>
+    </div>
+
+    <p class="story"></p>
+
+    <script>
+      // 1. Cache DOM elements
+      const customName = document.getElementById('customname');
+      const randomize  = document.querySelector('.randomize');
+      const storyEl    = document.querySelector('.story');
+
+      // 2. Pick a random item from an array
+      function randomValueFromArray(array) {
+        return array[Math.floor(Math.random() * array.length)];
+      }
+
+      // 3. Story template and your three sets of inserts
+      const storyTemplate = `It was 94 fahrenheit outside, so :insertx: went for a walk. 
+      When they got to :inserty:, they stared in horror for a few moments, then :insertz:. 
+      Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.`;
+
+      const insertX = ['Willy the Goblin', 'Big Daddy', 'Father Christmas'];
+      const insertY = ['the soup kitchen', 'Disneyland', 'the White House'];
+      const insertZ = [
+        'spontaneously combusted',
+        'melted into a puddle on the sidewalk',
+        'turned into a slug and crawled away'
+      ];
+
+      // 4. Main function
+      function result() {
+        let newStory = storyTemplate;
+
+        // pick random parts
+        const x = randomValueFromArray(insertX);
+        const y = randomValueFromArray(insertY);
+        const z = randomValueFromArray(insertZ);
+
+        // replace placeholders
+        newStory = newStory.replaceAll(':insertx:', x);
+        newStory = newStory.replaceAll(':inserty:', y);
+        newStory = newStory.replaceAll(':insertz:', z);
+
+        // custom name?
+        if (customName.value.trim() !== '') {
+          newStory = newStory.replaceAll('Bob', customName.value.trim());
+        }
+
+        // UK units?
+        if (document.getElementById('uk').checked) {
+          const weightStones = Math.round(300 / 14) + ' stone';
+          const tempCelsius  = Math.round((94 - 32) * (5 / 9)) + ' centigrade';
+          newStory = newStory.replaceAll('300 pounds', weightStones);
+          newStory = newStory.replaceAll('94 fahrenheit', tempCelsius);
+        }
+
+        // reveal it
+        storyEl.textContent      = newStory;
+        storyEl.style.visibility = 'visible';
+      }
+
+      // 5. Hook it up
+      randomize.addEventListener('click', result);
+    </script>
+  </body>
+</html>
