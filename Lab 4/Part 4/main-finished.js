@@ -1,105 +1,165 @@
-// set up canvas
+// Interactive Ball Animation – main-finished.js
+
+const display = document.querySelector("p");
+let ballTotal = 0;
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-const width = (canvas.width = window.innerWidth);
-const height = (canvas.height = window.innerHeight);
+const canvasWidth = canvas.width = window.innerWidth;
+const canvasHeight = canvas.height = window.innerHeight;
 
-// function to generate random number
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+// Random Value Generators
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
-// function to generate random RGB color value
-
-function randomRGB() {
-  return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
+function generateColor() {
+  return `rgb(${getRandom(0, 255)}, ${getRandom(0, 255)}, ${getRandom(0, 255)})`;
 }
 
-class Ball {
-  constructor(x, y, velX, velY, color, size) {
+// Abstract Shape Class
+class MotionEntity {
+  constructor(x, y, dx, dy) {
     this.x = x;
     this.y = y;
-    this.velX = velX;
-    this.velY = velY;
+    this.dx = dx;
+    this.dy = dy;
+  }
+}
+
+// Bouncing Ball Object
+class BounceBall extends MotionEntity {
+  constructor(x, y, dx, dy, color, radius) {
+    super(x, y, dx, dy);
     this.color = color;
-    this.size = size;
+    this.radius = radius;
+    this.isVisible = true;
   }
 
-  draw() {
+  show() {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fill();
   }
 
-  update() {
-    if (this.x + this.size >= width) {
-      this.velX = -Math.abs(this.velX);
+  move() {
+    if (this.x + this.radius >= canvasWidth || this.x - this.radius <= 0) {
+      this.dx = -this.dx;
     }
 
-    if (this.x - this.size <= 0) {
-      this.velX = Math.abs(this.velX);
+    if (this.y + this.radius >= canvasHeight || this.y - this.radius <= 0) {
+      this.dy = -this.dy;
     }
 
-    if (this.y + this.size >= height) {
-      this.velY = -Math.abs(this.velY);
-    }
-
-    if (this.y - this.size <= 0) {
-      this.velY = Math.abs(this.velY);
-    }
-
-    this.x += this.velX;
-    this.y += this.velY;
+    this.x += this.dx;
+    this.y += this.dy;
   }
 
-  collisionDetect() {
-    for (const ball of balls) {
-      if (!(this === ball)) {
-        const dx = this.x - ball.x;
-        const dy = this.y - ball.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+  detectContact() {
+    for (const other of ballList) {
+      if (this !== other && other.isVisible) {
+        const dx = this.x - other.x;
+        const dy = this.y - other.y;
+        const distance = Math.hypot(dx, dy);
 
-        if (distance < this.size + ball.size) {
-          ball.color = this.color = randomRGB();
+        if (distance < this.radius + other.radius) {
+          this.color = other.color = generateColor();
         }
       }
     }
   }
 }
 
-const balls = [];
+// User-Controlled Circle
+class PlayerOrb extends MotionEntity {
+  constructor(x, y) {
+    super(x, y, 20, 20);
+    this.color = "#fff";
+    this.radius = 10;
 
-while (balls.length < 25) {
-  const size = random(10, 20);
-  const ball = new Ball(
-    // ball position always drawn at least one ball width
-    // away from the edge of the canvas, to avoid drawing errors
-    random(0 + size, width - size),
-    random(0 + size, height - size),
-    random(-7, 7),
-    random(-7, 7),
-    randomRGB(),
-    size
-  );
-
-  balls.push(ball);
-}
-
-function loop() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-  ctx.fillRect(0, 0, width, height);
-
-  for (const ball of balls) {
-    ball.draw();
-    ball.update();
-    ball.collisionDetect();
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "a": this.x -= this.dx; break;
+        case "d": this.x += this.dx; break;
+        case "w": this.y -= this.dy; break;
+        case "s": this.y += this.dy; break;
+      }
+    });
   }
 
-  requestAnimationFrame(loop);
+  render() {
+    ctx.beginPath();
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 3;
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  enforceBounds() {
+    if (this.x + this.radius >= canvasWidth) this.x -= this.radius;
+    if (this.x - this.radius <= 0) this.x += this.radius;
+    if (this.y + this.radius >= canvasHeight) this.y -= this.radius;
+    if (this.y - this.radius <= 0) this.y += this.radius;
+  }
+
+  absorbBalls() {
+    for (const ball of ballList) {
+      if (ball.isVisible) {
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance < this.radius + ball.radius) {
+          ball.isVisible = false;
+          ballTotal--;
+          display.textContent = `Ball count: ${ballTotal}`;
+        }
+      }
+    }
+  }
 }
 
-loop();
+// Ball Creation
+const ballList = [];
+
+while (ballList.length < 25) {
+  const radius = getRandom(10, 20);
+  const ball = new BounceBall(
+    getRandom(radius, canvasWidth - radius),
+    getRandom(radius, canvasHeight - radius),
+    getRandom(-7, 7),
+    getRandom(-7, 7),
+    generateColor(),
+    radius
+  );
+
+  ballList.push(ball);
+  ballTotal++;
+  display.textContent = `Ball count: ${ballTotal}`;
+}
+
+const seeker = new PlayerOrb(getRandom(0, canvasWidth), getRandom(0, canvasHeight));
+
+// Animation Cycle
+function animate() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+  for (const ball of ballList) {
+    if (ball.isVisible) {
+      ball.show();
+      ball.move();
+      ball.detectContact();
+    }
+  }
+
+  seeker.render();
+  seeker.enforceBounds();
+  seeker.absorbBalls();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
