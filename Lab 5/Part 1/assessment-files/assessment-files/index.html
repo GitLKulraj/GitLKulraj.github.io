@@ -1,0 +1,172 @@
+<!--
+  Name: Kulraj Singh
+  File: index.html
+  Date: 08 August 2025
+  Description: Wildlife article page refactored for accessibility
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Accessibility Assessment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <h1>Welcome to Our Wildlife Website</h1>
+
+    <nav aria-label="Main navigation" class="site-nav">
+      <ul>
+        <li><a href="#" aria-current="page">Home</a></li>
+        <li><a href="https://www.nationalgeographic.org/society/our-programs/pristine-seas/our-team/">Our Team</a></li>
+        <li><a href="https://www.nationalgeographic.org/society/our-programs/">Projects</a></li>
+        <li><a href="https://www.nationalgeographic.com/related/ad45fa67-f3f7-335b-b817-d0430aee0a1f/blog">Blog</a></li>
+      </ul>
+    </nav>
+
+    <form action="/search" method="get" role="search" class="search">
+      <label for="site-search" class="visually-hidden">Search the site</label>
+      <input type="search" id="site-search" name="q" placeholder="Enter search terms" autocomplete="off">
+      <button type="submit">Go</button>
+    </form>
+  </header>
+
+  <main id="main" class="layout">
+    <article>
+      <h2>The Trouble with Bears</h2>
+      <p class="author">By Evan Wild</p>
+
+      <p>Bears are proud, independent creatures… Nothing like the ones on TV.</p>
+      <p>We explore their true nature and challenge the media portrayal.</p>
+
+      <h3>Types of bear</h3>
+      <p>Bears come in large and medium sizes. No small species exist except cubs.</p>
+      <p>Urban vs. wild bears have drastically different lifestyles.</p>
+
+      <table>
+        <caption>Facts about wild vs. urban bears</caption>
+        <thead>
+          <tr>
+            <th scope="col">Bear type</th>
+            <th scope="col">Coat</th>
+            <th scope="col">Adult size</th>
+            <th scope="col">Habitat</th>
+            <th scope="col">Lifespan</th>
+            <th scope="col">Diet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Wild</th>
+            <td>Brown or black</td>
+            <td>1.4–2.8 m</td>
+            <td>Woods and forests</td>
+            <td>25–28 years</td>
+            <td>Fish, meat, plants</td>
+          </tr>
+          <tr>
+            <th scope="row">Urban</th>
+            <td>North Face jacket (metaphorical)</td>
+            <td>1.4–2.2 m</td>
+            <td>Alleys and suburbs</td>
+            <td>20–32 years</td>
+            <td>Trash, donuts, sushi</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <figure>
+        <img src="media/wild-bear.jpg" alt="Brown bear in a forest clearing">
+        <figcaption>Wild bear foraging naturally.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="media/urban-bear.jpg" alt="Bear near a city dumpster at dusk">
+        <figcaption>Urban bear adapting to human environments.</figcaption>
+      </figure>
+
+      <h3>Mating rituals</h3>
+      <figure>
+        <audio controls>
+          <source src="media/bear.mp3" type="audio/mpeg">
+          <p>Your browser doesn’t support audio. <a href="media/bear.mp3">Download MP3</a>.</p>
+        </audio>
+        <figcaption>Expert commentary on bear mating rituals.</figcaption>
+      </figure>
+
+      <details>
+        <summary>Transcript: Bear mating rituals</summary>
+        <p>[0:00] Ambient forest and calls.</p>
+        <p>[0:15] Expert discussion of behavior.</p>
+      </details>
+
+      <aside aria-labelledby="author-heading" class="author-card">
+        <h3 id="author-heading">About the author</h3>
+        <p>Evan Wild is a wildlife enthusiast from Doncaster.</p>
+      </aside>
+
+      <section aria-labelledby="comments-heading" class="comments">
+        <h3 id="comments-heading">Comments</h3>
+        <button
+          type="button"
+          aria-expanded="false"
+          aria-controls="comment-wrapper"
+          class="show-hide"
+        >
+          Show comments
+        </button>
+
+        <div id="comment-wrapper" hidden>
+          <h4>Add your comment</h4>
+
+          <form class="comment-form" novalidate>
+            <div class="field">
+              <label for="comment-name">Your name</label>
+              <input type="text" id="comment-name" name="name" placeholder="Enter your name" autocomplete="name" required>
+              <p class="error" id="err-name" role="alert" hidden>Please enter your name.</p>
+            </div>
+
+            <div class="field">
+              <label for="comment-text">Your comment</label>
+              <textarea id="comment-text" name="comment" placeholder="Enter your comment" rows="3" required></textarea>
+              <p class="error" id="err-comment" role="alert" hidden>Please enter a comment.</p>
+            </div>
+
+            <button type="submit">Submit comment</button>
+          </form>
+
+          <h4 class="mt">Recent comments</h4>
+          <ul class="comment-list" aria-live="polite" aria-relevant="additions">
+            <li>
+              <p class="comment-author"><strong>Bob Fossil</strong></p>
+              <p>I run a zoo. Glad you taught me about bears!</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <aside aria-labelledby="related-heading" class="related">
+      <h3 id="related-heading">Related articles</h3>
+      <ul>
+        <li><a href="https://arrellfoodinstitute.ca/bees-are-in-big-trouble/">The Trouble with Bees</a></li>
+        <li><a href="https://www.montereybayaquarium.org/stories/threats-facing-sea-otters">The Trouble with Otters</a></li>
+        <li><a href="https://www.greenpeace.org.uk/news/antarctic-chinastrap-penguins-research/">The Trouble with Penguins</a></li>
+        <li><a href="https://www.freedomforanimals.org.uk/blog/world-octopus-day-2023">The Trouble with Octopi</a></li>
+        <li><a href="https://www.bbc.co.uk/news/science-environment-45035560">The Trouble with Lemurs</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 by Nobody. All rights reversed.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
